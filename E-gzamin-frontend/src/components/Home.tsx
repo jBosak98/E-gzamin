@@ -1,109 +1,74 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Home.scss";
-import { Link } from "react-router-dom";
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
-import HighlightOffTwoToneIcon from "@material-ui/icons/HighlightOffTwoTone";
-import HelpOutlineTwoToneIcon from "@material-ui/icons/HelpOutlineTwoTone";
-import test_icon from "../pictures/test_icon.svg";
-import Paper from "@material-ui/core/Paper";
-import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
+import Header from "./Header";
+import { makeStyles } from "@material-ui/core/styles";
 
-type TestFieldType = {
-  subject: string;
-  owner: string;
-  pub_date: string;
-  result: string;
-  result_positive: boolean;
-  attempts: number;
-  available_attempts: number;
-  deadline: string;
-  time: number;
-};
+import useTestTemplate from "../hooks/useTestTemplate";
+import TestField from "./TestField";
+import TestTemplateField from "./TestTemplateField";
+import useDesignates from "../hooks/useDesignates";
+import DesignateField from "./DesignateField";
+import useTestResults from "../hooks/useTestResults";
+import TestResultField from "./TestResultField";
 
-type StatusPicType = {
-  status: string;
-};
-
-function StatusIcon(props: StatusPicType) {
-  const status = props.status;
-  if (status === "todo") {
-    return <HelpOutlineTwoToneIcon style={{ color: "yellow" }} />;
-  }
-  if (status === "failed") {
-    return <HighlightOffTwoToneIcon style={{ color: "#ff4545" }} />;
-  }
-  if (status === "passed") {
-    return <CheckCircleIcon style={{ color: "lightgreen" }} />;
-  }
-  return null;
-}
-
-type TestIconType = {
-  status: "todo" | "failed" | "passed";
-};
-
-function TestIcon(props: TestIconType) {
-  const status = props.status;
-  return (
-    <div className="test-icon">
-      <img src={test_icon} alt="Test icon" />
-      <StatusIcon status={status} />
-    </div>
-  );
-}
-
-function TestField(props: TestFieldType) {
-  const {
-    subject,
-    owner,
-    pub_date,
-    result,
-    result_positive,
-    attempts,
-    available_attempts,
-    deadline,
-    time,
-  } = props;
-
-  let field = (
-    <div className="paper">
-      <Paper elevation={2}>
-        <div className="flex-container">
-          <TestIcon status="passed" />
-          <p>{subject}</p>
-          <p>{owner}</p>
-          <p>{pub_date}</p>
-          <p>{result}</p>
-          <p>{result_positive}</p>
-          <p>{attempts}</p>
-          <p>{available_attempts}</p>
-          <p>{deadline}</p>
-          <p>{time}</p>
-        </div>
-      </Paper>
-    </div>
-  );
-
-  return field;
-}
+const useStyles = makeStyles((theme) => ({
+  mainContent: {
+    width: "100%",
+    backgroundColor: theme.palette.background.default,
+  },
+  mainHeaders: {
+    color: theme.palette.text.primary,
+  },
+  testIcon: {
+    fill: theme.palette.text.primary,
+  },
+  root: {
+    flexGrow: 1,
+  },
+}));
 
 function Home() {
-  const x: string = "Home";
+  const styles = useStyles();
+  const { testTemplates, refetch: refetchTestTemplates } = useTestTemplate();
+  const {
+    ownedDesignates,
+    designates,
+    refetchAll: refetchAllDesignates,
+  } = useDesignates();
+  const { testResults, refetch: refetchTestResults } = useTestResults();
+
+  useEffect(() => {
+    refetchAllDesignates();
+    refetchTestResults();
+    refetchTestTemplates();
+  }, []);
+
   return (
     <div className="Home-content">
-      <p>Hello World {x}</p>
-      <h1>TODO</h1>
-      <TestField
-        subject="Pszyrka"
-        owner="Janusz"
-        pub_date="21.37.1410"
-        result="123/151900"
-        result_positive={false}
-        attempts={1}
-        available_attempts={3}
-        deadline="29.02.2021"
-        time={20}
-      />
+      {testTemplates.length > 0 && (
+        <Header content="TEST TEMPLATES" variant="h3" />
+      )}
+      {testTemplates.map((testTemplate, index) => (
+        <TestTemplateField testTemplate={testTemplate} key={index} />
+      ))}
+      {ownedDesignates.length > 0 && (
+        <Header content="DESIGNATED" variant="h3" />
+      )}
+      {ownedDesignates.map((designate, index) => (
+        <DesignateField key={index} designate={designate} />
+      ))}
+      {designates.length > 0 && <Header content="TODO" variant="h3" />}
+      {designates.map((designate, index) => (
+        <TestField key={index} designate={designate} />
+      ))}
+      {testResults.length > 0 && <Header content="COMPLETED" variant="h3" />}
+      {testResults.map((testResult, index) => (
+        <TestResultField key={index} testResult={testResult} />
+      ))}
+      {testTemplates.length === 0 &&
+        ownedDesignates.length === 0 &&
+        designates.length === 0 &&
+        testResults.length === 0 && <Header content="No tests" variant="h3" />}
     </div>
   );
 }

@@ -1,0 +1,78 @@
+### getting your results
+GET {{host}}/rest/testresults/
+Content-Type: application/json
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer {{user38}}
+
+
+### checking your questions
+GET {{host}}/rest/questions/
+Content-Type: application/json
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer {{user6}}
+
+### creating test result
+POST {{host}}/rest/testresults/
+Content-Type: application/json
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer {{user38}}
+
+{
+    "designateId":41
+}
+
+### updating testresult
+PUT {{host}}/rest/testresults/18/
+Content-Type: application/json
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer {{user38}}
+
+{
+  "designateId":41,
+  "questions":[
+    {
+        "questionId":1,
+        "answers":[3]
+    },
+    {
+        "questionId":2,
+        "answers":[5]
+    }
+]
+}
+
+### getting your results from 1 test as an owner
+GET {{host}}/rest/testresults/1
+Content-Type: application/json
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer {{user38}}
+
+### getting your results from 1 test as a group member
+GET {{host}}/rest/testresults/1
+Content-Type: application/json
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer {{user38}}
+
+
+### seeing someone elses results
+GET {{host}}/rest/testresults/17/
+Content-Type: application/json
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer {{user6}}
+
+### seeing test results of people in your group
+GET {{host}}/rest/testtemplates/19/testresults/
+Content-Type: application/json
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer {{user37}}
+
+
+

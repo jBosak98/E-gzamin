@@ -1,0 +1,79 @@
+### seeing designated test as group member
+GET {{host}}/rest/designates/
+Content-Type: application/json
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer {{user37}}
+
+### designating test as a group member
+
+POST {{host}}/rest/designates/
+Content-Type: application/json
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer {{user37}}
+
+{
+  "time": "01:00:00",
+    "passReq": "0.70",
+    "startDate": "2020-06-20T12:54:00.318303Z",
+    "endDate": "2022-07-06T00:00:00Z",
+    "group_id": "1",
+    "testTemplate_id": "19"
+}
+
+### seeing designated test as some random guy
+GET {{host}}/rest/designates/37/
+Content-Type: application/json
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer {{user38}}
+
+###checking your designated test
+GET {{host}}/rest/designates/?owned=true
+Content-Type: application/json
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer {{user37}}
+
+### designating your test to your group
+
+POST {{host}}/rest/designates/
+Content-Type: application/json
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer {{user37}}
+
+{
+  "time": "01:00:00",
+    "passReq": "0.70",
+    "startDate": "2020-06-20T12:54:00.318303Z",
+    "endDate": "2022-07-06T00:00:00Z",
+    "group_id": "11",
+    "testTemplate_id": "19"
+}
+
+### checking all designates
+
+GET {{host}}/rest/designates/
+Content-Type: application/json
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer {{admin}}
+
+### designating other pearsons test
+
+POST {{host}}/rest/designates/
+Content-Type: application/json
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer {{user37}}
+
+{
+  "time": "02:00:00",
+    "passReq": "0.60",
+    "startDate": "2020-06-20T12:54:00.318303Z",
+    "endDate": "2022-07-06T00:00:00Z",
+    "group_id": 11,
+    "testTemplate_id": 2
+}

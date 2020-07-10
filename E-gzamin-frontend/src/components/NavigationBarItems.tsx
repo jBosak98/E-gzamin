@@ -22,7 +22,7 @@ const NavigationBarItems = () => {
       <_MenuItem
         selectedItem={selectedItem}
         onClick={setSelectedItem}
-        to="/"
+        to="/egzamin/"
         label="Home"
       >
         <DashboardIcon />
@@ -30,7 +30,7 @@ const NavigationBarItems = () => {
       <_MenuItem
         selectedItem={selectedItem}
         onClick={setSelectedItem}
-        to="/maketest"
+        to="/egzamin/maketest"
         label="Make a test"
       >
         <PostAddIcon />
@@ -38,7 +38,7 @@ const NavigationBarItems = () => {
       <_MenuItem
         selectedItem={selectedItem}
         onClick={setSelectedItem}
-        to="/group"
+        to="/egzamin/group"
         label="Groups"
       >
         <PeopleIcon />
@@ -46,33 +46,17 @@ const NavigationBarItems = () => {
       <_MenuItem
         selectedItem={selectedItem}
         onClick={setSelectedItem}
-        to="/addquest"
+        to="/egzamin/addquest"
         label="Add Questions"
       >
         <AddIcon />
-      </_MenuItem>
-      <_MenuItem
-        selectedItem={selectedItem}
-        onClick={setSelectedItem}
-        to="/settings"
-        label="Settings"
-      >
-        <SettingsIcon />
-      </_MenuItem>
-      <_MenuItem
-        selectedItem={selectedItem}
-        onClick={setSelectedItem}
-        to="/tests"
-        label="Designed tests"
-      >
-        <LayersIcon />
       </_MenuItem>
       <div className="navbar-space" />
       <div className="bottom-items">
         <_MenuItem
           selectedItem={""}
           onClick={logoutAction}
-          to="/"
+          to="/egzamin/"
           label="Logout"
         >
           <ExitToAppIcon />

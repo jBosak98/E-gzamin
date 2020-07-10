@@ -1,0 +1,74 @@
+### adding test as user
+POST {{host}}/rest/testtemplates/
+Content-Type: application/json
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer {{user40}}
+
+{
+  "name": "name",
+  "questions":["1", "2", "27", "28"]
+}
+
+### Get all tests as admin
+GET {{host}}/rest/testtemplates/
+Content-Type: application/json
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer {{admin}}
+
+### Get all tests as user
+GET {{host}}/rest/testtemplates/
+Content-Type: application/json
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer {{user40}}
+
+###
+
+GET {{host}}/rest/questions/
+Content-Type: application/json
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer {{user40}}
+
+### see specific test
+
+GET {{host}}/rest/testtemplates/24/
+Content-Type: application/json
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer {{user40}}
+
+### try to see someone elses test (should not be possible)
+
+GET {{host}}/rest/testtemplates/18/
+Content-Type: application/json
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer {{user40}}
+
+### Update own test
+
+PUT {{host}}/rest/testtemplates/24/
+Content-Type: application/json
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer {{user40}}
+
+{
+  "name": "new name",
+  "questions":["2", "27", "28", "20"]
+}
+### Update not owned test (should not work)
+
+PUT {{host}}/rest/testtemplates/18/
+Content-Type: application/json
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer {{user40}}
+
+{
+  "name": "new name",
+  "questions":["2", "27", "28", "20"]
+}
